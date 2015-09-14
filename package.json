@@ -1,0 +1,48 @@
+{
+	"name": "vbb-lines",
+	"description": "Lines and their stations in Berlin & Brandenburg public transport service (VBB).",
+	"license": "MIT",
+	"author": {
+		"name": "Jannis R",
+		"email": "mail@jannisr.de",
+		"url": "http://jannisr.de"
+	},
+	"homepage": "https://github.com/derhuerst/vbb-lines",
+	"repository": "git://github.com/derhuerst/vbb-lines.git",
+	"bugs": "https://github.com/derhuerst/vbb-lines/issues",
+	"version": "0.1.0",
+	"main": "./index.js",
+	"keywords": [
+		"vbb",
+		"static",
+		"line",
+		"lines",
+		"berlin",
+		"brandenburg",
+		"public transport",
+		"gtfs",
+		"open data",
+		"json",
+		"ndjson",
+		"csv",
+		"fahrinfo",
+		"coffeescript",
+		"javascript"
+	],
+	"devDependencies": {
+		"coffee-script":		"^1.9.3",
+		"vbb-static":			"^0.8.0"
+	},
+	"dependencies": {
+		"q":					"^1.4.1",
+		"ndjson":				"^1.4.1",
+		"select-stream":		"^0.1.0"
+	},
+	"directories": {
+		"src":		"./",
+		"test":		"./test"
+	},
+	"scripts": {
+		"build":	"build/index.sh"
+	}
+}
