@@ -14,8 +14,13 @@
 	"bugs":              "https://github.com/derhuerst/vbb-lines/issues",
 	"license":           "ISC",
 	"dependencies": {
+		"ndjson":         "^1.4.3",
+		"stream-filter":  "^1",
+		"stream-sink":    "^1.2"
 	},
 	"devDependencies": {
+		"so":             "^1.0.1",
+		"shallow-equals": "^0.0.0"
 	},
 	"scripts": {
 		"build":         "node build.js",
