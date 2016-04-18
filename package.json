@@ -20,10 +20,17 @@
 	},
 	"devDependencies": {
 		"so":             "^1.0.1",
-		"shallow-equals": "^0.0.0"
+		"shallow-equals": "^0.0.0",
+		"coffee-script":  "^1.10",
+		"nodeunit":       "^0.9.1",
+		"is-stream":      "^1.0.1",
+		"is-promise":     "^2.1",
+		"watchy":         "^0.6.6"
 	},
 	"scripts": {
 		"build":         "node build.js",
-		"prepublish":    "npm run build"
+		"test":          "nodeunit --reporter minimal test.coffee",
+		"test:watch":    "watchy -s -w . nodeunit --reporter minimal test.coffee",
+		"prepublish":    "npm run build && npm test"
 	}
 }
