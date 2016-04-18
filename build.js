@@ -40,7 +40,7 @@ so(function* () {
 
 
 	const convert = ndjson.stringify()
-	const file = path.join(__dirname, '../data/lines.ndjson')
+	const file = path.join(__dirname, 'data.ndjson')
 	convert.pipe(fs.createWriteStream(file))
 
 	for (let id in lines) {convert.write(lines[id])}
