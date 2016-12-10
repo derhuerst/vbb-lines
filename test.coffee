@@ -59,26 +59,26 @@ module.exports =
 		'without `promised` flag':
 
 			'returns a stream': (t) ->
-				t.ok isStream lines id: 6
+				t.ok isStream lines id: '16943_700'
 				t.done()
 
 			'filters correctly': (t) ->
 				t.expect 2
-				sink = lines(id: 6).pipe sinkStream 'object'
+				sink = lines(id: '16943_700').pipe sinkStream 'object'
 				sink.then (data) ->
 					t.strictEqual data.length, 1
-					t.strictEqual data[0].id,  6
+					t.strictEqual data[0].id,  '16943_700'
 					t.done()
 
 		'with `promised` flag':
 
 			'returns a promise': (t) ->
-				t.ok isPromise lines true, id: 6
+				t.ok isPromise lines true, id: '16943_700'
 				t.done()
 
 			'filters correctly': (t) ->
 				t.expect 2
-				lines(true, id: 6).then (data) ->
+				lines(true, id: '16943_700').then (data) ->
 					t.strictEqual data.length, 1
-					t.strictEqual data[0].id,  6
+					t.strictEqual data[0].id,  '16943_700'
 					t.done()
