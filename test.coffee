@@ -1,4 +1,4 @@
-sink      = require 'stream-sink'
+sinkStream = require 'stream-sink'
 isStream  = require 'is-stream'
 isPromise = require 'is-promise'
 
@@ -64,8 +64,8 @@ module.exports =
 
 			'filters correctly': (t) ->
 				t.expect 2
-				sink = lines(id: 6).pipe sink objectMode: true
-				sink.on 'data', (data) ->
+				sink = lines(id: 6).pipe sinkStream 'object'
+				sink.then (data) ->
 					t.strictEqual data.length, 1
 					t.strictEqual data[0].id,  6
 					t.done()

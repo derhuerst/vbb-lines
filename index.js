@@ -39,18 +39,17 @@ const lines = function (/* promised, filter */) {
 
 	if (pattern === 'all' || pattern === undefined) filter = parser // no filter
 	else if ('number' === typeof pattern)
-		filter = parser.pipe(filterStream(filterById(pattern)))
-	else filter = parser.pipe(filterStream(filterByKeys(pattern)))
+		filter = parser.pipe(filterStream.obj(filterById(pattern)))
+	else filter = parser.pipe(filterStream.obj(filterByKeys(pattern)))
 
 	if (promised === true) return new Promise((resolve, reject) => {
 		reader.on('error', reject)
 		parser.on('error', reject)
 		filter.on('error', reject)
 
-		const results = filter.pipe(sink({objectMode: true}))
-		results.on('error', reject)
-
-		results.on('data', resolve)
+		const results = filter.pipe(sink('object'))
+		results.catch(reject)
+		results.then(resolve)
 	})
 	else return filter
 }
