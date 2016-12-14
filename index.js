@@ -21,11 +21,6 @@ const filterByKeys = (pattern) => (data) => {
 	return true
 }
 
-const matcher = (pattern) =>
-	('object' === typeof pattern
-	? filterByKeys(pattern)
-	: filterById(pattern))
-
 
 
 const lines = function (/* promised, filter */) {
@@ -38,7 +33,7 @@ const lines = function (/* promised, filter */) {
 	let   filter
 
 	if (pattern === 'all' || pattern === undefined) filter = parser // no filter
-	else if ('number' === typeof pattern)
+	else if ('string' === typeof pattern)
 		filter = parser.pipe(filterStream.obj(filterById(pattern)))
 	else filter = parser.pipe(filterStream.obj(filterByKeys(pattern)))
 
@@ -56,4 +51,4 @@ const lines = function (/* promised, filter */) {
 
 
 
-module.exports = Object.assign(lines, {filterById, filterByKeys, matcher})
+module.exports = Object.assign(lines, {filterById, filterByKeys})

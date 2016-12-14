@@ -70,6 +70,14 @@ module.exports =
 					t.strictEqual data[0].id,  '16943_700'
 					t.done()
 
+			'filters correctly': (t) ->
+				t.expect 2
+				sink = lines('16943_700').pipe sinkStream 'object'
+				sink.then (data) ->
+					t.strictEqual data.length, 1
+					t.strictEqual data[0].id,  '16943_700'
+					t.done()
+
 		'with `promised` flag':
 
 			'returns a promise': (t) ->
@@ -79,6 +87,13 @@ module.exports =
 			'filters correctly': (t) ->
 				t.expect 2
 				lines(true, id: '16943_700').then (data) ->
+					t.strictEqual data.length, 1
+					t.strictEqual data[0].id,  '16943_700'
+					t.done()
+
+			'filters correctly': (t) ->
+				t.expect 2
+				lines(true, '16943_700').then (data) ->
 					t.strictEqual data.length, 1
 					t.strictEqual data[0].id,  '16943_700'
 					t.done()
