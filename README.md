@@ -1,11 +1,13 @@
 # vbb-lines 🚏
 
-A **collection of all lines (and their stations) of the [Berlin Brandenburg public transport service (VBB)](http://www.vbb.de/)**, computed from [open](http://daten.berlin.de/datensaetze/vbb-fahrplandaten-dezember-2016-bis-dezember-2017) [GTFS](https://developers.google.com/transit/gtfs/) [data](https://github.com/derhuerst/vbb-gtfs).
+A **collection of all lines (and their stations) of the [Berlin Brandenburg public transport service (VBB)](http://www.vbb.de/)**, computed from [open](http://daten.berlin.de/datensaetze/vbb-fahrplandaten-januar-2017-bis-dezember-2017) [GTFS](https://developers.google.com/transit/gtfs/) [data](https://vbb-gtfs.jannisr.de/).
 
 [![npm version](https://img.shields.io/npm/v/vbb-lines.svg)](https://www.npmjs.com/package/vbb-lines)
+[![build status](https://img.shields.io/travis/derhuerst/vbb-lines.svg)](https://travis-ci.org/derhuerst/vbb-lines)
 [![dependency status](https://img.shields.io/david/derhuerst/vbb-lines.svg)](https://david-dm.org/derhuerst/vbb-lines)
 [![dev dependency status](https://img.shields.io/david/dev/derhuerst/vbb-lines.svg)](https://david-dm.org/derhuerst/vbb-lines#info=devDependencies)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/vbb-lines.svg)
+[![gitter channel](https://badges.gitter.im/derhuerst/vbb-rest.svg)](https://gitter.im/derhuerst/vbb-rest)
 
 
 ## Installing
