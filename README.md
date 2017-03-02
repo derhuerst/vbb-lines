@@ -4,8 +4,6 @@ A **collection of all lines (and their stations) of the [Berlin Brandenburg publ
 
 [![npm version](https://img.shields.io/npm/v/vbb-lines.svg)](https://www.npmjs.com/package/vbb-lines)
 [![build status](https://img.shields.io/travis/derhuerst/vbb-lines.svg)](https://travis-ci.org/derhuerst/vbb-lines)
-[![dependency status](https://img.shields.io/david/derhuerst/vbb-lines.svg)](https://david-dm.org/derhuerst/vbb-lines)
-[![dev dependency status](https://img.shields.io/david/dev/derhuerst/vbb-lines.svg)](https://david-dm.org/derhuerst/vbb-lines#info=devDependencies)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/vbb-lines.svg)
 [![gitter channel](https://badges.gitter.im/derhuerst/vbb-rest.svg)](https://gitter.im/derhuerst/vbb-rest)
 
@@ -18,6 +16,23 @@ npm install vbb-lines
 
 
 ## Usage
+
+This module contains data in the [*Friendly Public Transport Format*](https://github.com/public-transport/friendly-public-transport-format).
+
+```js
+{
+	type: 'line',
+	id: '17519_400',
+	name: 'U55',
+	operator: '796',
+	mode: 'train',
+	product: 'subway',
+	variants: [
+		['070201054601', '070201054501', '070201054401'], // station ids
+		['070201054401', '070201054501', '070201054601']
+	]
+}
+```
 
 ```js
 const lines = require('vbb-lines')
