@@ -1,7 +1,7 @@
 {
 	"name":              "vbb-lines",
 	"description":       "VBB lines and their stations.",
-	"version":           "2.3.0",
+	"version":           "3.0.0",
 	"main":              "index.js",
 	"files":             ["index.js", "data.ndjson", "vbb-logo.jpg"],
 	"keywords": [
@@ -13,6 +13,7 @@
 	"repository":        "git://github.com/derhuerst/vbb-lines.git",
 	"bugs":              "https://github.com/derhuerst/vbb-lines/issues",
 	"license":           "ISC",
+	"engines":           {"node": ">=6"},
 	"dependencies": {
 		"ndjson":         "^1.5.0",
 		"stream-filter":  "^2.1.0",

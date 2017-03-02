@@ -16,7 +16,17 @@ const writeNDJSON = (data, file) => new Promise((yay, nay) => {
 	for (let key in data) out.write(data[key])
 })
 
-const lineTypes = {
+const modes = {
+	'100': 'train',
+	'102': 'train',
+	'109': 'train',
+	'400': 'train',
+	'700': 'bus',
+	'900': 'tram',
+	'1000': 'ferry'
+}
+
+const products = {
 	'100': 'regional',
 	'102': 'regional',
 	'109': 'suburban',
@@ -37,9 +47,12 @@ const fetchLines = () => new Promise((yay, nay) => {
 	.on('data', (line) => {
 		const id = line.route_id
 		lines[id + ''] = {
-			id, name: line.route_short_name,
-			agencyId: line.agency_id,
-			type: lineTypes[line.route_type] || 'unknown',
+			type: 'line',
+			id,
+			name: line.route_short_name,
+			operator: line.agency_id,
+			mode: modes[line.route_type],
+			product: products[line.route_type] || null,
 			variants: []
 		}
 	})
