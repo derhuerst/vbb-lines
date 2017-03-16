@@ -1,7 +1,7 @@
 {
 	"name":              "vbb-lines",
 	"description":       "VBB lines and their stations.",
-	"version":           "1.2.0",
+	"version":           "3.0.0",
 	"main":              "index.js",
 	"files":             ["index.js", "data.ndjson", "vbb-logo.jpg"],
 	"keywords": [
@@ -13,23 +13,28 @@
 	"repository":        "git://github.com/derhuerst/vbb-lines.git",
 	"bugs":              "https://github.com/derhuerst/vbb-lines/issues",
 	"license":           "ISC",
+	"engines":           {"node": ">=6"},
 	"dependencies": {
-		"ndjson":         "^1.4.3",
+		"ndjson":         "^1.5.0",
 		"stream-filter":  "^2.1.0",
 		"stream-sink":    "^2.0.0"
 	},
 	"devDependencies": {
-		"so":             "^1.0.1",
-		"vbb-static":     "^1.1",
-		"shallow-equals": "^0",
-		"coffee-script":  "^1.10",
-		"nodeunit":       "^0.10.2",
+		"csv-parser": "^1.11.0",
+		"moment": "^2.17.1",
+		"shallow-equals": "^1.0.0",
+		"ndjson": "^1.5.0",
+		"coffee-script":  "^1.12.4",
+		"nodeunit":       "^0.11.0",
 		"is-stream":      "^1.0.1",
 		"is-promise":     "^2.1",
-		"watchy":         "^0.6.6"
+		"watchy":         "^0.6.7"
 	},
 	"scripts": {
-		"build":         "node build.js",
+		"download": "./download.sh",
+		"convert": "node convert.js",
+		"cleanup": "rm routes.txt trips.txt stop_times.txt",
+		"build": "npm run download && npm run convert && npm run cleanup",
 		"test":          "nodeunit --reporter minimal test.coffee",
 		"test:watch":    "watchy -s -w . nodeunit --reporter minimal test.coffee",
 		"prepublish":    "npm run build && npm test"

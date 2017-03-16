@@ -1,11 +1,11 @@
 # vbb-lines 🚏
 
-A **collection of all lines (and their stations) of the [Berlin Brandenburg public transport service (VBB)](http://www.vbb.de/)**, computed from [open](http://daten.berlin.de/datensaetze/vbb-fahrplandaten-juni-2015-bis-dezember-2015) [GTFS](https://developers.google.com/transit/gtfs/) [data](https://github.com/derhuerst/vbb-gtfs).
+A **collection of all lines (and their stations) of the [Berlin Brandenburg public transport service (VBB)](http://www.vbb.de/)**, computed from [open](http://daten.berlin.de/datensaetze/vbb-fahrplandaten-januar-2017-bis-dezember-2017) [GTFS](https://developers.google.com/transit/gtfs/) [data](https://vbb-gtfs.jannisr.de/).
 
 [![npm version](https://img.shields.io/npm/v/vbb-lines.svg)](https://www.npmjs.com/package/vbb-lines)
-[![dependency status](https://img.shields.io/david/derhuerst/vbb-lines.svg)](https://david-dm.org/derhuerst/vbb-lines)
-[![dev dependency status](https://img.shields.io/david/dev/derhuerst/vbb-lines.svg)](https://david-dm.org/derhuerst/vbb-lines#info=devDependencies)
+[![build status](https://img.shields.io/travis/derhuerst/vbb-lines.svg)](https://travis-ci.org/derhuerst/vbb-lines)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/vbb-lines.svg)
+[![gitter channel](https://badges.gitter.im/derhuerst/vbb-rest.svg)](https://gitter.im/derhuerst/vbb-rest)
 
 
 ## Installing
@@ -17,10 +17,27 @@ npm install vbb-lines
 
 ## Usage
 
+This module contains data in the [*Friendly Public Transport Format*](https://github.com/public-transport/friendly-public-transport-format).
+
+```js
+{
+	type: 'line',
+	id: '17519_400',
+	name: 'U55',
+	operator: '796',
+	mode: 'train',
+	product: 'subway',
+	variants: [
+		['070201054601', '070201054501', '070201054401'], // station ids
+		['070201054401', '070201054501', '070201054601']
+	]
+}
+```
+
 ```js
 const lines = require('vbb-lines')
 
-lines(true, 9042101).then(console.log) // query a single line
+lines(true, '15296_700').then(console.log) // query a single line
 lines({type: 'bus'}).on('data', console.log) // filter lines
 lines('all').on('data', console.log)
 ```
@@ -36,9 +53,9 @@ Otherwise, a [stream](https://nodejs.org/api/stream.html#stream_class_stream_rea
 
 `pattern` can be one of the following:
 
-- a line ID, like `8000147`
+- a line ID, like `'15296_700'`
 - `'all'`
-- an object like `{type: 'bus', agencyId: 'ANG'}`, with each property being mandatory
+- an object like `{type: 'bus', agencyId: '47'}`, with each property being mandatory
 
 
 ## Contributing
