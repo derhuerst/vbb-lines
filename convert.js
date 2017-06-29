@@ -17,6 +17,11 @@ const writeNDJSON = (data, file) => new Promise((yay, nay) => {
 })
 
 const modes = {
+	'0': 'train',
+	'1': 'train',
+	'2': 'train',
+	'3': 'bus',
+	'4': 'ferry',
 	'100': 'train',
 	'102': 'train',
 	'109': 'train',
@@ -26,7 +31,19 @@ const modes = {
 	'1000': 'ferry'
 }
 
+// see https://developers.google.com/transit/gtfs/reference/routes-file
+const isAmbiguous = {
+	'0': true, // `0` can be suburban or tram
+	'2': true // `2` can be regional or express train
+}
+
+// see https://developers.google.com/transit/gtfs/reference/routes-file
 const products = {
+	'0': 'suburban',
+	'1': 'subway',
+	'2': 'regional',
+	'3': 'bus',
+	'4': 'ferry',
 	'100': 'regional',
 	'102': 'regional',
 	'109': 'suburban',
@@ -46,12 +63,19 @@ const fetchLines = () => new Promise((yay, nay) => {
 
 	.on('data', (line) => {
 		const id = line.route_id
+		const type = line.route_type
+		const name = line.route_short_name
+
+		if (isAmbiguous[type]) {
+			console.error(`route_type ${type} of line ${name} (${id}) is ambiguous.`)
+		}
+
 		lines[id + ''] = {
 			type: 'line',
 			id,
-			name: line.route_short_name,
+			name,
 			operator: line.agency_id,
-			mode: modes[line.route_type],
+			mode: modes[type],
 			product: products[line.route_type] || null,
 			variants: []
 		}
