@@ -64,7 +64,7 @@ const fetchLines = () => new Promise((yay, nay) => {
 	.on('data', (line) => {
 		const id = line.route_id
 		const type = line.route_type
-		const name = line.route_short_name
+		const name = line.route_short_name || line.route_long_name
 
 		if (isAmbiguous[type]) {
 			console.error(`route_type ${type} of line ${name} (${id}) is ambiguous.`)

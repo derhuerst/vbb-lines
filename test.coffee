@@ -2,7 +2,7 @@ sinkStream = require 'stream-sink'
 isStream  = require 'is-stream'
 isPromise = require 'is-promise'
 
-lines  = require './index.js'
+lines  = require '.'
 
 
 
@@ -77,6 +77,24 @@ module.exports =
 					t.strictEqual data.length, 1
 					t.strictEqual data[0].id,  '16943_700'
 					t.done()
+
+			'all lines look valid': (t) ->
+				s = lines('all')
+				s.on 'error', t.ifError
+				s.on 'end', t.done
+				s.on 'data', (l) ->
+					t.strictEqual l.type, 'line'
+					t.strictEqual typeof l.id, 'string'
+					t.ok l.id
+					t.strictEqual typeof l.name, 'string'
+					t.ok l.name
+					t.strictEqual typeof l.operator, 'string'
+					t.ok l.operator
+					t.strictEqual typeof l.mode, 'string'
+					t.ok l.mode
+					t.strictEqual typeof l.product, 'string'
+					t.ok l.product
+					t.ok Array.isArray l.variants
 
 		'with `promised` flag':
 
