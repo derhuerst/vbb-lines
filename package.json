@@ -23,6 +23,7 @@
 		"csv-parser": "^1.11.0",
 		"moment": "^2.17.1",
 		"shallow-equals": "^1.0.0",
+		"strip-bom-stream": "^3.0.0",
 		"ndjson": "^1.5.0",
 		"coffee-script":  "^1.12.4",
 		"nodeunit":       "^0.11.0",

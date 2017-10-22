@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const stripBOM = require('strip-bom-stream')
 const csv = require('csv-parser')
 const moment = require('moment')
 const equal = require('shallow-equals')
@@ -59,6 +60,7 @@ const fetchLines = () => new Promise((yay, nay) => {
 	const lines = {}
 
 	fs.createReadStream(path.join(__dirname, 'routes.txt')).on('error', nay)
+	.pipe(stripBOM()).on('error', nay)
 	.pipe(csv()).on('error', nay)
 
 	.on('data', (line) => {
@@ -89,6 +91,7 @@ const fetchTrips = () => new Promise((yay, nay) => {
 	const trips = {}
 
 	fs.createReadStream(path.join(__dirname, 'trips.txt')).on('error', nay)
+	.pipe(stripBOM()).on('error', nay)
 	.pipe(csv()).on('error', nay)
 
 	.on('data', (trip) => {
@@ -102,6 +105,7 @@ const fetchTrips = () => new Promise((yay, nay) => {
 
 const fetchArrivals = (trips) => new Promise((yay, nay) => {
 	fs.createReadStream(path.join(__dirname, 'stop_times.txt')).on('error', nay)
+	.pipe(stripBOM()).on('error', nay)
 	.pipe(csv()).on('error', nay)
 
 	.on('data', (arrival) => {
