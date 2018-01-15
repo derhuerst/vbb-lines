@@ -1,42 +1,55 @@
 {
-	"name":              "vbb-lines",
-	"description":       "VBB lines and their stations.",
+	"name": "vbb-lines",
+	"description": "VBB lines and their stations.",
 	"version": "3.9.0",
-	"main":              "index.js",
-	"files":             ["index.js", "data.ndjson", "vbb-logo.jpg"],
-	"keywords": [
-		"vbb", "berlin", "brandenburg", "public transport",
-		"lines", "open data", "json", "ndjson", "gtfs"
+	"main": "index.js",
+	"files": [
+		"index.js",
+		"data.ndjson",
+		"data.md",
+		"vbb-logo.jpg"
 	],
-	"author":            "Jannis R <mail@jannisr.de>",
-	"homepage":          "https://github.com/derhuerst/vbb-lines",
-	"repository":        "git://github.com/derhuerst/vbb-lines.git",
-	"bugs":              "https://github.com/derhuerst/vbb-lines/issues",
-	"license":           "ISC",
-	"engines":           {"node": ">=6"},
+	"keywords": [
+		"vbb",
+		"berlin",
+		"brandenburg",
+		"public transport",
+		"lines",
+		"open data",
+		"json",
+		"ndjson",
+		"gtfs"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/vbb-lines",
+	"repository": "git://github.com/derhuerst/vbb-lines.git",
+	"bugs": "https://github.com/derhuerst/vbb-lines/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
 	"dependencies": {
-		"ndjson":         "^1.5.0",
-		"stream-filter":  "^2.1.0",
-		"stream-sink":    "^2.0.0"
+		"ndjson": "^1.5.0",
+		"stream-filter": "^2.1.0",
+		"stream-sink": "^2.0.0"
 	},
 	"devDependencies": {
 		"csv-parser": "^1.11.0",
+		"is-promise": "^2.1",
+		"is-stream": "^1.0.1",
 		"moment": "^2.17.1",
+		"ndjson": "^1.5.0",
 		"shallow-equals": "^1.0.0",
 		"strip-bom-stream": "^3.0.0",
-		"ndjson": "^1.5.0",
-		"is-stream": "^1.0.1",
-		"is-promise": "^2.1",
-		"tape": "^4.8.0",
-		"watchy": "^0.8.0"
+		"tap-min": "^1.2.2",
+		"tape": "^4.8.0"
 	},
 	"scripts": {
 		"download": "./download.sh",
 		"convert": "node convert.js",
 		"cleanup": "rm routes.txt trips.txt stop_times.txt",
 		"build": "npm run download && npm run convert && npm run cleanup",
-		"test": "node test.js",
-		"test:watch":    "watchy -s -w . nodeunit --reporter minimal test.coffee",
+		"test": "node test.js | tap-min",
 		"prepublishOnly": "npm run build && npm test"
 	}
 }
