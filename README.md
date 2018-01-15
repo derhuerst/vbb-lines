@@ -27,10 +27,13 @@ The [npm package](https://npmjs.com/vbb-lines) contains data in the [*Friendly P
 	operator: '796',
 	mode: 'train',
 	product: 'subway',
-	variants: [
-		['070201054601', '070201054501', '070201054401'], // station ids
-		['070201054401', '070201054501', '070201054601']
-	]
+	variants: [ {
+		trips: 120,
+		stops: ['070201054601', '070201054501', '070201054401']
+	}, {
+		trips: 120,
+		stops: ['070201054401', '070201054501', '070201054601']
+	} ]
 }
 ```
 

@@ -103,7 +103,16 @@ test('lines', (t) => {
 				t.ok(l.mode)
 				t.strictEqual(typeof l.product, 'string')
 				t.ok(l.product)
+
 				t.ok(Array.isArray(l.variants))
+				for (let i = 0; i < l.variants.length; i++) {
+					const v = l.variants[i]
+					const msg = 'variant ' + i + ':'
+					t.ok('object' === typeof v && !Array.isArray(v), msg + ' array')
+					t.equal('number', typeof v.trips, msg + '.trips number')
+					t.ok(Array.isArray(v.stops), msg + '.stops array')
+					// todo
+				}
 			})
 		})
 	})
