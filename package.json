@@ -25,18 +25,17 @@
 		"shallow-equals": "^1.0.0",
 		"strip-bom-stream": "^3.0.0",
 		"ndjson": "^1.5.0",
-		"coffee-script":  "^1.12.4",
-		"nodeunit":       "^0.11.0",
-		"is-stream":      "^1.0.1",
-		"is-promise":     "^2.1",
-		"watchy":         "^0.7.0"
+		"is-stream": "^1.0.1",
+		"is-promise": "^2.1",
+		"tape": "^4.8.0",
+		"watchy": "^0.7.0"
 	},
 	"scripts": {
 		"download": "./download.sh",
 		"convert": "node convert.js",
 		"cleanup": "rm routes.txt trips.txt stop_times.txt",
 		"build": "npm run download && npm run convert && npm run cleanup",
-		"test":          "nodeunit --reporter minimal test.coffee",
+		"test": "node test.js",
 		"test:watch":    "watchy -s -w . nodeunit --reporter minimal test.coffee",
 		"prepublishOnly": "npm run build && npm test"
 	}
