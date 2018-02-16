@@ -97,7 +97,12 @@ const fetchTrips = () => new Promise((yay, nay) => {
 	.on('data', (trip) => {
 		const id = trip.trip_id
 		const lineId = trip.route_id
-		trips[id + ''] = {id, lineId, stops: []}
+		trips[id + ''] = {
+			id,
+			lineId,
+			stops: [],
+			arrivals: 0
+		}
 	})
 
 	.on('end', () => yay(trips))
@@ -109,10 +114,11 @@ const fetchArrivals = (trips) => new Promise((yay, nay) => {
 	.pipe(csv()).on('error', nay)
 
 	.on('data', (arrival) => {
-		const tripId = arrival.trip_id
-		if (!trips[tripId]) return console.error('Unknown trip', tripId)
+		const trip = trips[arrival.trip_id]
+		if (!trip) return console.error('Unknown trip', arrival.trip_id)
 		const i = parseInt(arrival.stop_sequence)
-		trips[tripId].stops[i] = arrival.stop_id
+		trip.stops[i] = arrival.stop_id
+		if (i === 0) trip.arrivals++
 	})
 
 	.on('end', () => yay(trips))
@@ -132,8 +138,8 @@ const computeVariants = (lines, trips) => {
 		const variant = line.variants.find((variant) => {
 			return equal(variant.stops, trip.stops)
 		})
-		if (variant) variant.trips++
-		else line.variants.push({trips: 1, stops: trip.stops})
+		if (variant) variant.arrivals += trip.arrivals
+		else line.variants.push({arrivals: trip.arrivals, stops: trip.stops})
 	}
 	return lines
 }
