@@ -39,6 +39,7 @@
 		"is-stream": "^1.0.1",
 		"moment": "^2.17.1",
 		"ndjson": "^1.5.0",
+		"pump": "^3.0.0",
 		"shallow-equals": "^1.0.0",
 		"strip-bom-stream": "^3.0.0",
 		"tap-min": "^1.2.2",
