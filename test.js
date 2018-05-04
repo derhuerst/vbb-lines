@@ -104,6 +104,11 @@ test('lines', (t) => {
 				t.equal(typeof l.product, 'string')
 				t.ok(l.product)
 				t.ok(Array.isArray(l.variants))
+				for (let v of l.variants) {
+					t.ok(v)
+					t.equal(typeof v.trips, 'number')
+					t.ok(Array.isArray(v.stops))
+				}
 			})
 		})
 	})

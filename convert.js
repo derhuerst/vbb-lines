@@ -95,7 +95,7 @@ const fetchTrips = () => new Promise((resolve, reject) => {
 	const writeTrip = (trip, _, cb) => {
 		const id = trip.trip_id
 		const lineId = trip.route_id
-		trips[id + ''] = {id, lineId, stations: []}
+		trips[id + ''] = {id, lineId, stops: []}
 		cb()
 	}
 
@@ -119,7 +119,7 @@ const fetchArrivals = (trips) => new Promise((resolve, reject) => {
 			return cb()
 		}
 		const i = parseInt(arrival.stop_sequence)
-		trips[tripId].stations[i] = arrival.stop_id
+		trips[tripId].stops[i] = arrival.stop_id
 		cb()
 	}
 
@@ -143,8 +143,13 @@ const computeVariants = (lines, trips) => {
 			console.error('Unknown line', trip.lineId)
 			continue
 		}
-		if (!line.variants.some(v => equal(v, trip.stations))) {
-			line.variants.push(trip.stations)
+		const variant = line.variants.find(v => equal(v.stops, trip.stops))
+		if (variant) variant.trips++
+		else {
+			line.variants.push({
+				stops: trip.stops,
+				trips: 1
+			})
 		}
 	}
 	return lines
