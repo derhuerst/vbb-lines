@@ -5,8 +5,7 @@ const fs           = require('fs')
 const ndjson       = require('ndjson')
 const filterStream = require('stream-filter')
 const sink         = require('stream-sink')
-
-
+const pump = require('pump')
 
 const file = path.join(__dirname, 'data.ndjson')
 
@@ -21,34 +20,32 @@ const filterByKeys = (pattern) => (data) => {
 	return true
 }
 
+const lines = (...args) => {
+	const pattern = args.pop()
+	const promised = !!args.shift()
 
+	const chain = [
+		fs.createReadStream(file),
+		ndjson.parse()
+	]
+	if ('string' === typeof pattern) {
+		if (pattern !== 'all') {
+			const filter = filterStream.obj(filterById(pattern))
+			chain.push(filter)
+		}
+	} else if (pattern !== undefined) {
+		const filter = filterStream.obj(filterByKeys(pattern))
+		chain.push(filter)
+	}
 
-const lines = function (/* promised, filter */) {
-	const args = Array.prototype.slice.call(arguments)
-	let   pattern = args.pop()
-	let   promised = !!args.shift()
-
-	const reader = fs.createReadStream(file)
-	const parser = reader.pipe(ndjson.parse())
-	let   filter
-
-	if (pattern === 'all' || pattern === undefined) filter = parser // no filter
-	else if ('string' === typeof pattern)
-		filter = parser.pipe(filterStream.obj(filterById(pattern)))
-	else filter = parser.pipe(filterStream.obj(filterByKeys(pattern)))
-
-	if (promised === true) return new Promise((resolve, reject) => {
-		reader.on('error', reject)
-		parser.on('error', reject)
-		filter.on('error', reject)
-
-		const results = filter.pipe(sink('object'))
-		results.catch(reject)
-		results.then(resolve)
-	})
-	else return filter
+	if (promised === true) {
+		const out = sink('object')
+		pump(...chain, out, () => {})
+		return out
+	}
+	return pump(...chain, () => {})
 }
 
-
-
-module.exports = Object.assign(lines, {filterById, filterByKeys})
+lines.filterById = filterById
+lines.filterByKeys = filterByKeys
+module.exports = lines
