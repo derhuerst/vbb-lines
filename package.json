@@ -35,7 +35,7 @@
 		"stream-sink": "^2.0.0"
 	},
 	"devDependencies": {
-		"csv-parser": "^1.11.0",
+		"csv-parser": "^2.0.0",
 		"is-promise": "^2.1",
 		"is-stream": "^1.0.1",
 		"moment": "^2.17.1",
