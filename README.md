@@ -39,7 +39,7 @@ The [npm package](https://npmjs.com/vbb-lines) contains data in the [*Friendly P
 const lines = require('vbb-lines')
 
 lines(true, '15296_700').then(console.log) // query a single line
-lines({type: 'bus'}).on('data', console.log) // filter lines
+lines({mode: 'bus'}).on('data', console.log) // filter lines
 lines('all').on('data', console.log)
 ```
 
@@ -56,7 +56,7 @@ Otherwise, a [stream](https://nodejs.org/api/stream.html#stream_class_stream_rea
 
 - a line ID, like `'15296_700'`
 - `'all'`
-- an object like `{type: 'bus', agencyId: '47'}`, with each property being mandatory
+- an object like `{mode: 'bus', agencyId: '47'}`, with each property being mandatory
 
 
 ## Contributing
