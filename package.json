@@ -42,7 +42,7 @@
 		"ndjson": "^1.5.0",
 		"shallow-equals": "^1.0.0",
 		"strip-bom-stream": "^3.0.0",
-		"tap-min": "^1.2.2",
+		"tap-min": "^2.0.0",
 		"tape": "^4.8.0"
 	},
 	"scripts": {
