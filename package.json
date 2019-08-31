@@ -1,7 +1,7 @@
 {
 	"name": "vbb-lines",
 	"description": "VBB lines and their stations.",
-	"version": "4.6.0",
+	"version": "4.7.0",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -48,7 +48,7 @@
 	"scripts": {
 		"download": "./download.sh",
 		"convert": "node convert.js",
-		"cleanup": "rm routes.txt trips.txt stop_times.txt",
+		"cleanup": "rm routes.csv trips.csv stop_times.csv",
 		"build": "npm run download && npm run convert && npm run cleanup",
 		"test": "node test.js | tap-min",
 		"prepublishOnly": "npm run build && npm test"

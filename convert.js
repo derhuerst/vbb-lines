@@ -79,7 +79,7 @@ const fetchLines = () => new Promise((resolve, reject) => {
 	}
 
 	pump(
-		fs.createReadStream(path.join(__dirname, 'routes.txt')),
+		fs.createReadStream(path.join(__dirname, 'routes.csv')),
 		stripBOM(),
 		csv(),
 		new Writable({objectMode: true, write: writeLine}),
@@ -100,7 +100,7 @@ const fetchTrips = () => new Promise((resolve, reject) => {
 	}
 
 	pump(
-		fs.createReadStream(path.join(__dirname, 'trips.txt')),
+		fs.createReadStream(path.join(__dirname, 'trips.csv')),
 		stripBOM(),
 		csv(),
 		new Writable({objectMode: true, write: writeTrip}),
@@ -124,7 +124,7 @@ const fetchArrivals = (trips) => new Promise((resolve, reject) => {
 	}
 
 	pump(
-		fs.createReadStream(path.join(__dirname, 'stop_times.txt')),
+		fs.createReadStream(path.join(__dirname, 'stop_times.csv')),
 		stripBOM(),
 		csv(),
 		new Writable({objectMode: true, write: writeArrival}),
