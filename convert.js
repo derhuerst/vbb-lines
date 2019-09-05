@@ -25,7 +25,7 @@ const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
 })
 
 const writeJSON = (data, file) => new Promise((resolve, reject) => {
-	data = Object.values(data)
+	data = Object.keys(data).map(k => data[k])
 	fs.writeFile(path.join(__dirname, file), JSON.stringify(data), (err) => {
 		if (err) reject(err)
 		else resolve()
