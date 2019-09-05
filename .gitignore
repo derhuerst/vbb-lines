@@ -7,9 +7,9 @@ npm-debug.log
 
 /package-lock.json
 
-routes.txt
-trips.txt
-stop_times.txt
+routes.csv
+trips.csv
+stop_times.csv
 
 data.ndjson
 data.json
