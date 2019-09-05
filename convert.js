@@ -11,12 +11,17 @@ const equal = require('shallow-equals')
 const ndjson = require('ndjson')
 
 const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
-	const out = ndjson.stringify()
-	out.once('error', reject)
-	out.pipe(fs.createWriteStream(path.join(__dirname, file)))
-	.once('error', reject)
-	.once('finish', () => resolve())
-	for (let key in data) out.write(data[key])
+	const toJSON = ndjson.stringify()
+	pump(
+		toJSON,
+		fs.createWriteStream(path.join(__dirname, file)),
+		(err) => {
+			if (err) reject(err)
+			else resolve()
+		}
+	)
+	for (let key in data) toJSON.write(data[key])
+	toJSON.end()
 })
 
 const modes = {
