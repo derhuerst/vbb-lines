@@ -6,6 +6,7 @@ const isStream = require('is-stream')
 const isPromise = require('is-promise')
 
 const lines = require('.')
+const asJSON = require('./data.json')
 
 test('filterById', (t) => {
 	const predicate = lines.filterById(2)
@@ -140,5 +141,15 @@ test('lines', (t) => {
 			})
 			.catch(t.ifError)
 		})
+	})
+})
+
+test('data.json', (t) => {
+	t.test('is deep-equal to data.ndjson', (t) => {
+		t.plan(1)
+		lines('all')
+		.pipe(sinkStream('object'))
+		.then(data => t.deepEqual(asJSON, data))
+		.catch(t.ifError)
 	})
 })

@@ -24,6 +24,14 @@ const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
 	toJSON.end()
 })
 
+const writeJSON = (data, file) => new Promise((resolve, reject) => {
+	data = Object.values(data)
+	fs.writeFile(path.join(__dirname, file), JSON.stringify(data), (err) => {
+		if (err) reject(err)
+		else resolve()
+	})
+})
+
 const modes = {
 	'0': 'train',
 	'1': 'train',
@@ -167,6 +175,7 @@ Promise.all([
 .then(([lines, trips]) => {
 	lines = computeVariants(lines, trips)
 	return writeNDJSON(lines, 'data.ndjson')
+	.then(() => writeJSON(lines, 'data.json'))
 })
 .catch((err) => {
 	console.error(err)

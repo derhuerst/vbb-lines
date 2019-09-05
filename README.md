@@ -43,6 +43,8 @@ lines({mode: 'bus'}).on('data', console.log) // filter lines
 lines('all').on('data', console.log)
 ```
 
+If you want the data as JSON, use `require('vbb-lines/data.json')`.
+
 
 ## API
 
