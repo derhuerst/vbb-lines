@@ -44,7 +44,7 @@
 		"shallow-equals": "^1.0.0",
 		"strip-bom-stream": "^3.0.0",
 		"tap-min": "^1.2.2",
-		"tape": "^4.8.0"
+		"tape": "^5.0.0"
 	},
 	"scripts": {
 		"download": "./download.sh",
