@@ -37,7 +37,7 @@
 	},
 	"devDependencies": {
 		"csv-parser": "^2.0.0",
-		"is-promise": "^3.0.0",
+		"is-promise": "^4.0.0",
 		"is-stream": "^1.0.1",
 		"moment": "^2.17.1",
 		"ndjson": "^1.5.0",
