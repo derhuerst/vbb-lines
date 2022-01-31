@@ -37,6 +37,7 @@
 	},
 	"devDependencies": {
 		"csv-parser": "^2.0.0",
+		"eslint": "^8.8.0",
 		"is-promise": "^4.0.0",
 		"is-stream": "^2.0.1",
 		"moment": "^2.17.1",
@@ -46,11 +47,12 @@
 		"tape": "^5.0.0"
 	},
 	"scripts": {
+		"lint": "eslint .",
 		"download": "./download.sh",
 		"convert": "node convert.js",
 		"cleanup": "rm routes.csv trips.csv stop_times.csv",
 		"build": "npm run download && npm run convert && npm run cleanup",
 		"test": "node test.js | tap-min",
-		"prepublishOnly": "npm run build && npm test"
+		"prepublishOnly": "npm run lint && npm run build && npm test"
 	}
 }

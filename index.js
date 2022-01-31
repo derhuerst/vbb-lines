@@ -11,10 +11,12 @@ const file = path.join(__dirname, 'data.ndjson')
 
 const filterById = (id) => (data) =>
 	!!(data && ('object' === typeof data) && data.id === id)
+
+const hasProp = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key)
 const filterByKeys = (pattern) => (data) => {
 	if (!data || 'object' !== typeof data) return false
-	for (let key in pattern) {
-		if (!data.hasOwnProperty(key)) return false
+	for (const key of Object.keys(pattern)) {
+		if (!hasProp(data, key)) return false
 		if (data[key] !== pattern[key]) return false
 	}
 	return true

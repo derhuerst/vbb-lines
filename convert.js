@@ -85,7 +85,7 @@ const fetchLines = () => new Promise((resolve, reject) => {
 			name,
 			operator: line.agency_id,
 			mode: modes[type],
-			product: products[line.route_type] || null,
+			product: products[line.route_type] || null,
 			variants: []
 		}
 		cb()
