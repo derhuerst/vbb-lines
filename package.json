@@ -1,7 +1,7 @@
 {
 	"name": "vbb-lines",
 	"description": "VBB lines and their stations.",
-	"version": "4.12.0",
+	"version": "5.0.0",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -50,7 +50,7 @@
 		"lint": "eslint .",
 		"download": "./download.sh",
 		"convert": "node convert.js",
-		"cleanup": "rm routes.csv trips.csv stop_times.csv",
+		"cleanup": "rm *.csv *.csv.etag",
 		"build": "npm run download && npm run convert && npm run cleanup",
 		"test": "node test.js | tap-min",
 		"prepublishOnly": "npm run lint && npm run build && npm test"
