@@ -27,10 +27,10 @@
 	"bugs": "https://github.com/derhuerst/vbb-lines/issues",
 	"license": "ISC",
 	"engines": {
-		"node": ">=6"
+		"node": ">=16"
 	},
 	"dependencies": {
-		"ndjson": "^1.5.0",
+		"ndjson": "^2.0.0",
 		"pump": "^3.0.0",
 		"stream-filter": "^2.1.0",
 		"stream-sink": "^2.0.0"
@@ -38,12 +38,11 @@
 	"devDependencies": {
 		"csv-parser": "^2.0.0",
 		"is-promise": "^4.0.0",
-		"is-stream": "^1.0.1",
+		"is-stream": "^2.0.1",
 		"moment": "^2.17.1",
-		"ndjson": "^1.5.0",
 		"shallow-equals": "^1.0.0",
-		"strip-bom-stream": "^3.0.0",
-		"tap-min": "^1.2.2",
+		"strip-bom-stream": "^4.0.0",
+		"tap-min": "^2.0.0",
 		"tape": "^5.0.0"
 	},
 	"scripts": {
