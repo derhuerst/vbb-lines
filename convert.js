@@ -9,6 +9,7 @@ const {Writable} = require('stream')
 const moment = require('moment')
 const equal = require('shallow-equals')
 const ndjson = require('ndjson')
+const {gtfsToFptf} = require('gtfs-utils/route-types')
 
 const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
 	const toJSON = ndjson.stringify()
@@ -31,21 +32,6 @@ const writeJSON = (data, file) => new Promise((resolve, reject) => {
 		else resolve()
 	})
 })
-
-const modes = {
-	'0': 'train',
-	'1': 'train',
-	'2': 'train',
-	'3': 'bus',
-	'4': 'ferry',
-	'100': 'train',
-	'102': 'train',
-	'109': 'train',
-	'400': 'train',
-	'700': 'bus',
-	'900': 'tram',
-	'1000': 'ferry'
-}
 
 // see https://developers.google.com/transit/gtfs/reference/routes-file
 const isAmbiguous = {
@@ -84,7 +70,7 @@ const fetchLines = () => new Promise((resolve, reject) => {
 			id,
 			name,
 			operator: line.agency_id,
-			mode: modes[type],
+			mode: gtfsToFptf(+type),
 			product: products[line.route_type] || null,
 			variants: []
 		}
