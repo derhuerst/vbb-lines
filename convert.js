@@ -4,7 +4,7 @@ const readCsv = require('gtfs-utils/read-csv')
 const fs = require('fs')
 const {writeFile} = require('fs/promises')
 const path = require('path')
-const pump = require('pump')
+const {pipeline} = require('stream')
 const equal = require('shallow-equals')
 const ndjson = require('ndjson')
 const {gtfsToFptf} = require('gtfs-utils/route-types')
@@ -13,7 +13,7 @@ const readGtfsFile = file => readCsv(path.join(__dirname, file + '.csv'))
 
 const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
 	const toJSON = ndjson.stringify()
-	pump(
+	pipeline(
 		toJSON,
 		fs.createWriteStream(path.join(__dirname, file)),
 		(err) => {

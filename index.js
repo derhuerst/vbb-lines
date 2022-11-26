@@ -5,7 +5,7 @@ const fs           = require('fs')
 const ndjson       = require('ndjson')
 const filterStream = require('stream-filter')
 const sink         = require('stream-sink')
-const pump = require('pump')
+const {pipeline} = require('stream')
 
 const file = path.join(__dirname, 'data.ndjson')
 
@@ -42,10 +42,10 @@ const lines = (...args) => {
 
 	if (promised === true) {
 		const out = sink('object')
-		pump(...chain, out, () => {})
+		pipeline(...chain, out, () => {})
 		return out
 	}
-	return pump(...chain, () => {})
+	return pipeline(...chain, () => {})
 }
 
 lines.filterById = filterById

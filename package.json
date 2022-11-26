@@ -31,7 +31,6 @@
 	},
 	"dependencies": {
 		"ndjson": "^2.0.0",
-		"pump": "^3.0.0",
 		"stream-filter": "^2.1.0",
 		"stream-sink": "^2.0.0"
 	},
