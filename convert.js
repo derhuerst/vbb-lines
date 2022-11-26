@@ -1,15 +1,16 @@
 'use strict'
 
+const readCsv = require('gtfs-utils/read-csv')
 const fs = require('fs')
+const {writeFile} = require('fs/promises')
 const path = require('path')
 const pump = require('pump')
-const stripBOM = require('strip-bom-stream')
-const csv = require('csv-parser')
-const {Writable} = require('stream')
 const moment = require('moment')
 const equal = require('shallow-equals')
 const ndjson = require('ndjson')
 const {gtfsToFptf} = require('gtfs-utils/route-types')
+
+const readGtfsFile = file => readCsv(path.join(__dirname, file + '.csv'))
 
 const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
 	const toJSON = ndjson.stringify()
@@ -55,9 +56,10 @@ const products = {
 	'1000': 'ferry'
 }
 
-const fetchLines = () => new Promise((resolve, reject) => {
+const fetchLines = async () => {
 	const lines = Object.create(null)
-	const writeLine = (line, _, cb) => {
+
+	for await (const line of await readGtfsFile('routes')) {
 		const id = line.route_id
 		const type = line.route_type
 		const name = line.route_short_name || line.route_long_name
@@ -74,67 +76,39 @@ const fetchLines = () => new Promise((resolve, reject) => {
 			product: products[line.route_type] || null,
 			variants: []
 		}
-		cb()
 	}
 
-	pump(
-		fs.createReadStream(path.join(__dirname, 'routes.csv')),
-		stripBOM(),
-		csv(),
-		new Writable({objectMode: true, write: writeLine}),
-		(err) => {
-			if (err) reject(err)
-			else resolve(lines)
-		}
-	)
-})
+	return lines
+}
 
-const fetchTrips = () => new Promise((resolve, reject) => {
+const fetchTrips = async () => {
 	const trips = Object.create(null)
-	const writeTrip = (trip, _, cb) => {
+
+	for await (const trip of await readGtfsFile('trips')) {
 		const id = trip.trip_id
 		const lineId = trip.route_id
 		trips[id + ''] = {id, lineId, stops: []}
-		cb()
 	}
 
-	pump(
-		fs.createReadStream(path.join(__dirname, 'trips.csv')),
-		stripBOM(),
-		csv(),
-		new Writable({objectMode: true, write: writeTrip}),
-		(err) => {
-			if (err) reject(err)
-			else resolve(trips)
-		}
-	)
-})
+	return trips
+}
 
-const fetchArrivals = (trips) => new Promise((resolve, reject) => {
-	const writeArrival = (arrival, _, cb) => {
+const addStopoversToTrips = async (trips) => {
+	for await (const arrival of await readGtfsFile('stop_times')) {
 		const tripId = arrival.trip_id
 		if (!trips[tripId]) {
 			console.error('Unknown trip', tripId)
-			return cb()
+			continue
 		}
+
 		const i = parseInt(arrival.stop_sequence)
 		trips[tripId].stops[i] = arrival.stop_id
-		cb()
 	}
 
-	pump(
-		fs.createReadStream(path.join(__dirname, 'stop_times.csv')),
-		stripBOM(),
-		csv(),
-		new Writable({objectMode: true, write: writeArrival}),
-		(err) => {
-			if (err) reject(err)
-			else resolve(trips)
-		}
-	)
-})
+	return trips
+}
 
-const computeVariants = (lines, trips) => {
+const computeLineVariants = (lines, trips) => {
 	for (let tripId in trips) {
 		const trip = trips[tripId]
 		const line = lines[trip.lineId]
@@ -151,18 +125,23 @@ const computeVariants = (lines, trips) => {
 			})
 		}
 	}
-	return lines
 }
 
-Promise.all([
-	fetchLines(),
-	fetchTrips().then(fetchArrivals)
-])
-.then(([lines, trips]) => {
-	lines = computeVariants(lines, trips)
-	return writeNDJSON(lines, 'data.ndjson')
-	.then(() => writeJSON(lines, 'data.json'))
-})
+;(async () => {
+	const [
+		lines, trips,
+	] = await Promise.all([
+		fetchLines(),
+		fetchTrips(),
+	])
+	await addStopoversToTrips(trips)
+	computeLineVariants(lines, trips)
+
+	await Promise.all([
+		writeNDJSON(lines, 'data.ndjson'),
+		writeJSON(lines, 'data.json'),
+	])
+})()
 .catch((err) => {
 	console.error(err)
 	process.exit(1)
