@@ -8,6 +8,10 @@ const isPromise = require('is-promise')
 const lines = require('.')
 const asJSON = require('./data.json')
 
+// In the 2022-11-25 dataset, because of the Fahrplanwechsel, there are multiple "RE1"
+// routes; We want the ODEG one.
+const RE1 = '23945_100'
+
 test('filterById', (t) => {
 	const predicate = lines.filterById(2)
 	t.plan(6)
@@ -60,17 +64,17 @@ test('filterByKeys', (t) => {
 test('lines', (t) => {
 	t.test('without `promised` flag', (t) => {
 		t.test('returns a stream', (t) => {
-			t.ok(isStream(lines({id: '16943_700'})))
+			t.ok(isStream(lines({id: RE1})))
 			t.end()
 		})
 
 		t.test('filters correctly', (t) => {
 			t.plan(2)
-			lines({id: '16943_700'})
+			lines({id: RE1})
 			.pipe(sinkStream('object'))
 			.then((data) => {
 				t.equal(data.length, 1)
-				t.equal(data[0].id,  '16943_700')
+				t.equal(data[0].id,  RE1)
 				t.end()
 			})
 			.catch(t.ifError)
@@ -78,11 +82,11 @@ test('lines', (t) => {
 
 		t.test('filters correctly', (t) => {
 			t.plan(2)
-			lines('16943_700')
+			lines(RE1)
 			.pipe(sinkStream('object'))
 			.then((data) => {
 				t.equal(data.length, 1)
-				t.equal(data[0].id,  '16943_700')
+				t.equal(data[0].id,  RE1)
 				t.end()
 			})
 			.catch(t.ifError)
@@ -116,16 +120,16 @@ test('lines', (t) => {
 
 	t.test('with `promised` flag', (t) => {
 		t.test('returns a promise', (t) => {
-			t.ok(isPromise(lines(true, {id: '16943_700'})))
+			t.ok(isPromise(lines(true, {id: RE1})))
 			t.end()
 		})
 
 		t.test('filters correctly', (t) => {
 			t.plan(2)
-			lines(true, {id: '16943_700'})
+			lines(true, {id: RE1})
 			.then((data) => {
 				t.equal(data.length, 1)
-				t.equal(data[0].id,  '16943_700')
+				t.equal(data[0].id,  RE1)
 				t.end()
 			})
 			.catch(t.ifError)
@@ -133,10 +137,10 @@ test('lines', (t) => {
 
 		t.test('filters correctly', (t) => {
 			t.plan(2)
-			lines(true, '16943_700')
+			lines(true, RE1)
 			.then((data) => {
 				t.equal(data.length, 1)
-				t.equal(data[0].id,  '16943_700')
+				t.equal(data[0].id,  RE1)
 				t.end()
 			})
 			.catch(t.ifError)
