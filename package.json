@@ -40,7 +40,6 @@
 		"gtfs-utils": "^5.1.0",
 		"is-promise": "^4.0.0",
 		"is-stream": "^2.0.1",
-		"moment": "^2.17.1",
 		"shallow-equals": "^1.0.0",
 		"tap-min": "^2.0.0",
 		"tape": "^5.0.0"

@@ -5,7 +5,6 @@ const fs = require('fs')
 const {writeFile} = require('fs/promises')
 const path = require('path')
 const pump = require('pump')
-const moment = require('moment')
 const equal = require('shallow-equals')
 const ndjson = require('ndjson')
 const {gtfsToFptf} = require('gtfs-utils/route-types')
@@ -26,13 +25,10 @@ const writeNDJSON = (data, file) => new Promise((resolve, reject) => {
 	toJSON.end()
 })
 
-const writeJSON = (data, file) => new Promise((resolve, reject) => {
-	data = Object.keys(data).map(k => data[k])
-	fs.writeFile(path.join(__dirname, file), JSON.stringify(data), (err) => {
-		if (err) reject(err)
-		else resolve()
-	})
-})
+const writeJSON = async (data, file) => {
+	data = Object.values(data)
+	await writeFile(path.join(__dirname, file), JSON.stringify(data))
+}
 
 // see https://developers.google.com/transit/gtfs/reference/routes-file
 const isAmbiguous = {
