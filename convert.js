@@ -37,6 +37,7 @@ const isAmbiguous = {
 }
 
 // see https://developers.google.com/transit/gtfs/reference/routes-file
+// see https://github.com/public-transport/hafas-client/blob/5.26.5/p/vbb/products.js
 const products = {
 	'0': 'suburban',
 	'1': 'subway',
@@ -44,7 +45,7 @@ const products = {
 	'3': 'bus',
 	'4': 'ferry',
 	'100': 'regional',
-	'102': 'regional',
+	'102': 'express', // "Long Distance Trains, e.g. InterCity/EuroCity"
 	'109': 'suburban',
 	'400': 'subway',
 	'700': 'bus',
