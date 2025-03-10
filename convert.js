@@ -46,6 +46,7 @@ const products = {
 	'4': 'ferry',
 	'100': 'regional',
 	'102': 'express', // "Long Distance Trains, e.g. InterCity/EuroCity"
+	'106': 'regional', // "Regional Rail Service, e.g. TER (FR), Regionalzug (DE)"
 	'109': 'suburban',
 	'400': 'subway',
 	'700': 'bus',
@@ -63,6 +64,9 @@ const fetchLines = async () => {
 		if (isAmbiguous[type]) {
 			console.error(`route_type ${type} of line ${name} (${id}) is ambiguous.`)
 		}
+		if (!products[type]) {
+			console.error(`route_type ${type} of line ${name} (${id}) has no mapped product.`)
+		}
 
 		lines[id + ''] = {
 			type: 'line',
@@ -70,7 +74,7 @@ const fetchLines = async () => {
 			name,
 			operator: line.agency_id,
 			mode: gtfsToFptf(+type),
-			product: products[line.route_type] || null,
+			product: products[type] || null,
 			variants: []
 		}
 	}
