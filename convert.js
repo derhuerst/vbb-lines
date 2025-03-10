@@ -44,10 +44,10 @@ const products = {
 	'2': 'regional',
 	'3': 'bus',
 	'4': 'ferry',
-	'100': 'regional',
+	'100': 'regional', // "Railway Service"
 	'102': 'express', // "Long Distance Trains, e.g. InterCity/EuroCity"
 	'106': 'regional', // "Regional Rail Service, e.g. TER (FR), Regionalzug (DE)"
-	'109': 'suburban',
+	'109': 'suburban', // "Suburban Railway, e.g. S-Bahn (DE), RER (FR), S-tog (Kopenhagen)"
 	'400': 'subway',
 	'700': 'bus',
 	'900': 'tram',
